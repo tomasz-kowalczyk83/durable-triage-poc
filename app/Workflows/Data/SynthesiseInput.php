@@ -11,9 +11,9 @@ class SynthesiseInput extends Data
     public function __construct(
         public readonly int $incidentId,
         public readonly Severity $severity,
-        #[DataCollectionOf(CorrelationRef::class)] 
+        #[DataCollectionOf(CorrelationRef::class)]
         public readonly array $correlations,
-        #[DataCollectionOf(RunbookRef::class)]     
+        #[DataCollectionOf(RunbookRef::class)]
         public readonly array $runbooks,
     ) {}
 }

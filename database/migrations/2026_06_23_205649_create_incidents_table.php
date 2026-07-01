@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('incidents', function (Blueprint $table) {
             $table->id();
             $table->string('raw_payload');
-            $table->string('severity ')->nullable();
+            $table->string('severity')->nullable();
             $table->json('correlation_ids');
             $table->json('runbook_refs');
             $table->text('suggestion')->nullable();

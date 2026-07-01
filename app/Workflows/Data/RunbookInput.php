@@ -1,0 +1,12 @@
+<?php
+
+namespace App\Workflows\Data;
+
+use Spatie\LaravelData\Data;
+
+class RunbookInput extends Data
+{
+    public function __construct(
+        public int $incidentId
+    ) {}
+}
