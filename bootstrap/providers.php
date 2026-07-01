@@ -1,7 +1,11 @@
 <?php
 
+use App\Providers\AppServiceProvider;
+use App\Providers\FortifyServiceProvider;
+use App\Providers\WaterlineServiceProvider;
+
 return [
-    App\Providers\AppServiceProvider::class,
-    App\Providers\FortifyServiceProvider::class,
-    App\Providers\WaterlineServiceProvider::class,
+    AppServiceProvider::class,
+    FortifyServiceProvider::class,
+    WaterlineServiceProvider::class,
 ];
