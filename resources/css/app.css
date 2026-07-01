@@ -1,27 +1,29 @@
 @import 'tailwindcss';
-@import '../../vendor/livewire/flux/dist/flux.css';
+@import '../../vendor/tallstackui/tallstackui/css/v4.css';
+
+@plugin '@tailwindcss/forms';
 
 @source '../views';
+@source '../../vendor/tallstackui/tallstackui/**/*.php';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../vendor/livewire/flux-pro/stubs/**/*.blade.php';
-@source '../../vendor/livewire/flux/stubs/**/*.blade.php';
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
+    /* Tailwind zinc scale — main #27272a, sidebar #18181b */
     --color-zinc-50: #fafafa;
-    --color-zinc-100: #f5f5f5;
-    --color-zinc-200: #e5e5e5;
-    --color-zinc-300: #d4d4d4;
-    --color-zinc-400: #a3a3a3;
-    --color-zinc-500: #737373;
-    --color-zinc-600: #525252;
-    --color-zinc-700: #404040;
-    --color-zinc-800: #262626;
-    --color-zinc-900: #171717;
-    --color-zinc-950: #0a0a0a;
+    --color-zinc-100: #f4f4f5;
+    --color-zinc-200: #e4e4e7;
+    --color-zinc-300: #d4d4d8;
+    --color-zinc-400: #a1a1aa;
+    --color-zinc-500: #71717a;
+    --color-zinc-600: #52525b;
+    --color-zinc-700: #3f3f46;
+    --color-zinc-800: #27272a;
+    --color-zinc-900: #18181b;
+    --color-zinc-950: #09090b;
 
     --color-accent: var(--color-neutral-800);
     --color-accent-content: var(--color-neutral-800);
@@ -30,37 +32,67 @@
 
 @layer theme {
     .dark {
+        color-scheme: dark;
+
         --color-accent: var(--color-white);
         --color-accent-content: var(--color-white);
-        --color-accent-foreground: var(--color-neutral-800);
+        --color-accent-foreground: var(--color-zinc-900);
+
+        /* Align TallStackUI dark-* tokens with zinc palette */
+        --color-dark-200: #e4e4e7;
+        --color-dark-300: #d4d4d8;
+        --color-dark-400: #a1a1aa;
+        --color-dark-500: #71717a;
+        --color-dark-600: #3f3f46;
+        --color-dark-700: #27272a;
+        --color-dark-800: #18181b;
+        --color-dark-900: #09090b;
+        --color-dark-950: #09090b;
     }
 }
 
 @layer base {
-
     *,
     ::after,
     ::before,
     ::backdrop,
     ::file-selector-button {
-        border-color: var(--color-gray-200, currentColor);
+        border-color: var(--color-zinc-200, currentColor);
+    }
+
+    .dark *,
+    .dark ::after,
+    .dark ::before,
+    .dark ::backdrop,
+    .dark ::file-selector-button {
+        border-color: color-mix(in oklab, var(--color-white) 12%, transparent);
     }
 }
 
-[data-flux-field]:not(ui-radio, ui-checkbox) {
-    @apply grid gap-2;
+.sidebar-user-menu {
+    @apply w-full;
 }
 
-[data-flux-label] {
-    @apply  !mb-0 !leading-tight;
+.sidebar-user-menu > div,
+.sidebar-user-menu .relative {
+    @apply w-full;
 }
 
-input:focus[data-flux-control],
-textarea:focus[data-flux-control],
-select:focus[data-flux-control] {
-    @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground;
-}
+/* Readable defaults for hand-written page markup in dark mode */
+@layer components {
+    .dark .app-prose {
+        @apply text-zinc-200;
+    }
 
-/* \[:where(&)\]:size-4 {
-    @apply size-4;
-} */
+    .dark .app-prose :where(h1, h2, h3, h4) {
+        @apply text-white;
+    }
+
+    .dark .app-prose :where(p, li, dd) {
+        @apply text-zinc-200;
+    }
+
+    .dark .app-prose :where(dt, .text-muted) {
+        @apply text-zinc-400;
+    }
+}
