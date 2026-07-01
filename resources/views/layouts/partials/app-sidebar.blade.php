@@ -16,6 +16,8 @@
         icon="exclamation-triangle"
         :route="route('incidents.index')"
         match="incidents.*"
+        :badge="(string) \App\Models\Incident::query()->count()"
+        badge-color="zinc"
     />
 
     <x-slot:footer>

@@ -49,6 +49,7 @@ class IncidentPagesTest extends TestCase
             ->get(route('incidents.index'))
             ->assertOk()
             ->assertSee('Incidents')
+            ->assertSee('ml-auto overflow-hidden transition-all duration-150', false)
             ->assertSee((string) $incident->id);
     }
 
