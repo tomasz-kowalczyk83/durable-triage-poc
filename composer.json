@@ -12,14 +12,16 @@
         "php": "^8.3",
         "laravel-workflow/laravel-workflow": "*",
         "laravel-workflow/waterline": "*",
+        "laravel/ai": "^0.8",
         "laravel/chisel": "^0.1.0",
         "laravel/fortify": "^1.37.2",
         "laravel/framework": "^13.7",
+        "laravel/mcp": "^0.8",
         "laravel/tinker": "^3.0",
         "livewire/blaze": "^1.0",
-        "livewire/flux": "^2.13.1",
         "livewire/livewire": "^4.1",
-        "spatie/laravel-data": "*"
+        "spatie/laravel-data": "*",
+        "tallstackui/tallstackui": "3.0.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.24",
@@ -68,7 +70,7 @@
             "@test"
         ],
         "types:check": [
-            "phpstan analyse"
+            "@php -d memory_limit=2G vendor/bin/phpstan analyse --no-parallel --memory-limit=2G"
         ],
         "test": [
             "@php artisan config:clear --ansi",
@@ -81,8 +83,7 @@
             "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
-            "@php artisan boost:update --ansi"
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""

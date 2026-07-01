@@ -3,12 +3,21 @@
 use App\Concerns\PasswordValidationRules;
 use App\Livewire\Actions\Logout;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 new class extends Component {
     use PasswordValidationRules;
 
+    public bool $show = false;
+
     public string $password = '';
+
+    #[On('open-delete-user-modal')]
+    public function open(): void
+    {
+        $this->show = true;
+    }
 
     /**
      * Delete the currently authenticated user.
@@ -23,28 +32,32 @@ new class extends Component {
 
         $this->redirect('/', navigate: true);
     }
+
+    public function updatedShow(bool $value): void
+    {
+        if (! $value) {
+            $this->reset('password');
+            $this->resetErrorBag();
+        }
+    }
 }; ?>
 
-<flux:modal name="confirm-user-deletion" :show="$errors->isNotEmpty()" focusable class="max-w-lg">
+<x-modal wire="show" size="lg" :title="__('Are you sure you want to delete your account?')">
     <form method="POST" wire:submit="deleteUser" class="space-y-6">
-        <div>
-            <flux:heading size="lg">{{ __('Are you sure you want to delete your account?') }}</flux:heading>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+            {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
+        </p>
 
-            <flux:subheading>
-                {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
-            </flux:subheading>
-        </div>
+        <x-password wire:model="password" :label="__('Password')" :rules="false" />
 
-        <flux:input wire:model="password" :label="__('Password')" type="password" viewable />
+        <div class="flex justify-end gap-2">
+            <x-button type="button" color="secondary" outline wire:click="$set('show', false)">
+                {{ __('Cancel') }}
+            </x-button>
 
-        <div class="flex justify-end space-x-2 rtl:space-x-reverse">
-            <flux:modal.close>
-                <flux:button variant="filled">{{ __('Cancel') }}</flux:button>
-            </flux:modal.close>
-
-            <flux:button variant="danger" type="submit" data-test="confirm-delete-user-button">
+            <x-button color="red" type="submit" data-test="confirm-delete-user-button">
                 {{ __('Delete account') }}
-            </flux:button>
+            </x-button>
         </div>
     </form>
-</flux:modal>
+</x-modal>
