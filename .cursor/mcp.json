@@ -1,0 +1,12 @@
+{
+    "mcpServers": {
+        "durable-triage": {
+            "command": "php",
+            "args": [
+                "artisan",
+                "mcp:start",
+                "triage"
+            ]
+        }
+    }
+}
